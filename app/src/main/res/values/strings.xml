@@ -1,0 +1,12 @@
+<resources>
+    <string name="message_welcome">WELCOME!</string>
+    <string name="message_allowance_details">Allowance Details(₹)</string>
+    <string name="message_expense_details">Expense Details(₹)</string>
+    <string name="message_current_balance">Current Balance(₹)</string>
+    <string name="message_allowance_receive">Allowance Received(₹)</string>
+    <string name="message_amount_spent">Amount spent(₹)</string>
+    <string name="button_update_allowance">Check allowance!</string>
+    <string name="button_update_expense">Update expense</string>
+    <string name="button_change">Confirm</string>
+    <string name="app_name">My Allowance Manager</string>
+</resources>
