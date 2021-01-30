@@ -90,25 +90,43 @@ public class UpdateExpense extends AppCompatActivity {
             public void onClick(View v) {
                 //Setting value in java variable from UI
                 String mAmountSpent  = mAmountSpentView.getText().toString();
-                if(mAmountSpent!=""){
-                    //Conversion from to integer
-                    int mAmountSpentInt = Integer.parseInt(mAmountSpent);
+                if(!mAmountSpent.isEmpty()) {
+                    //Conversion from string to integer
+                   int mAmountSpentInt = Integer.parseInt(mAmountSpent);
 
-                    //Updating value and saving value to local file
-                    mCurrentAllowance = mCurrentAllowance - mAmountSpentInt;
-                    mCurrentAllowanceValueView.setText(mCurrentAllowance.toString());
-                    mUpdatedAllowance = mCurrentAllowance + " as of "+ new java.util.Date().toString();
-                    updateAllowanceToFile(mUpdatedAllowance.toString(),UpdateExpense.this);
-                    Log.d("MyAllowance","Updated value "+mUpdatedAllowance.toString());
+                   //Validating input
+                   Boolean IsValid = CheckAmounts(mCurrentAllowance, mAmountSpentInt, mAmountSpentView);
 
+                   if (IsValid) {
+
+                        //Updating value and saving value to local file
+                        mCurrentAllowance = mCurrentAllowance - mAmountSpentInt;
+                        mCurrentAllowanceValueView.setText(mCurrentAllowance.toString());
+                        mUpdatedAllowance = mCurrentAllowance + " as of " + new java.util.Date().toString();
+                        updateAllowanceToFile(mUpdatedAllowance.toString(), UpdateExpense.this);
+                        Log.d("MyAllowance", "Updated value " + mUpdatedAllowance.toString());
+
+                        //Setting and calling MainActivity intent
+                        Intent mIntent = new Intent(UpdateExpense.this, MainActivity.class);
+                        startActivity(mIntent);
+                        finish();
+                    }
                 }
-
-                //Setting and calling MainActivity intent
-                Intent mIntent = new Intent(UpdateExpense.this,MainActivity.class);
-                startActivity(mIntent);
-                finish();
 
             }
         });
     }
+        //Function to check whether inputs follow specific criteria
+        private Boolean CheckAmounts(int currentAllowance, int amountSpent, EditText amountSpentView){
+        //Criteria to be checked-expense is non-zero and less than current balance
+            if(currentAllowance<amountSpent){
+                amountSpentView.setError("Amount exceeds current balance!");
+                return false;
+            }
+            if(amountSpent==0){
+                amountSpentView.setError("Enter non-zero amount!");
+                return false;
+            }
+            return true;
+        }
 }

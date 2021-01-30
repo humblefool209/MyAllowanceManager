@@ -94,27 +94,41 @@ public class UpdateAllowance  extends AppCompatActivity {
                 String mAllowanceReceived = mReceivedAllowanceView.getText().toString();
 
 
-                if (mAllowanceReceived != "") {
+                if (!mAllowanceReceived.isEmpty()) {
                     //Converting String to integer
                     int mAllowanceReceivedInt = Integer.parseInt(mAllowanceReceived);
 
-                    //Updating allowance and saving it to target file
-                    mCurrentAllowance = mCurrentAllowance + mAllowanceReceivedInt;
-                    mCurrentAllowanceValueView.setText(mCurrentAllowance.toString());
-                    mUpdatedAllowance = mCurrentAllowance.toString() + " as of "+ new java.util.Date().toString();
-                    updateAllowanceToFile(mUpdatedAllowance,UpdateAllowance.this);
-                    Log.d("MyAllowance","Updated value "+mUpdatedAllowance);
+                    //Input validation
+                    Boolean IsValid = CheckAmounts(mCurrentAllowance, mAllowanceReceivedInt, mReceivedAllowanceView);
 
+                    if (IsValid) {
+                        //Updating allowance and saving it to target file
+                        mCurrentAllowance = mCurrentAllowance + mAllowanceReceivedInt;
+                        mCurrentAllowanceValueView.setText(mCurrentAllowance.toString());
+                        mUpdatedAllowance = mCurrentAllowance.toString() + " as of " + new java.util.Date().toString();
+                        updateAllowanceToFile(mUpdatedAllowance, UpdateAllowance.this);
+                        Log.d("MyAllowance", "Updated value " + mUpdatedAllowance);
+
+
+
+                        //Calling MainActivity intent
+                        Intent mIntent = new Intent(UpdateAllowance.this, MainActivity.class);
+                        startActivity(mIntent);
+                        finish();
+
+                    }
                 }
-
-                //Calling MainActivity intent
-                Intent mIntent = new Intent(UpdateAllowance.this,MainActivity.class);
-                startActivity(mIntent);
-                finish();
-
             }
         });
+    }
 
-
+    //Function to check whether inputs follow specific criteria
+    private Boolean CheckAmounts(int currentAllowance, int amountReceived, EditText amountReceivedView){
+       //Criteria: Amount Received has to be non-zero
+        if(amountReceived==0){
+            amountReceivedView.setError("Enter non-zero amount!");
+            return false;
+        }
+        return true;
     }
 }
