@@ -99,7 +99,7 @@
                 android:textSize="24dp"
                 android:textStyle="bold"
                 android:inputType="number"
-                android:hint="@string/allowance_entry_type"
+                android:hint="@string/input_entry_type"
                 />
         </RelativeLayout>
 

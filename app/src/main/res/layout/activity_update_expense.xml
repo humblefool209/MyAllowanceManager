@@ -98,6 +98,8 @@
             android:layout_below="@+id/label_amount_spent"
             android:textSize="24dp"
             android:textStyle="bold"
+            android:inputType="number"
+            android:hint="@string/input_entry_type"
             />
     </RelativeLayout>
 

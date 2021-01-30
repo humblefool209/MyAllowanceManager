@@ -67,23 +67,34 @@ public class UpdateExpense extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Calling superclass onCreate method
         super.onCreate(savedInstanceState);
+
+        //Setting view
         setContentView(R.layout.activity_update_expense);
 
+        //Initializing variables for input controls
         final TextView mCurrentAllowanceValueView = findViewById(R.id.value_current_balance);
         final EditText mAmountSpentView = findViewById(R.id.value_amount_spent);
         Button mConfirmButton = findViewById(R.id.button_confirm);
 
+        //Retrieving value from local file
         mCurrentAllowance = readFromFile(this);
         Log.d("MyAllowance","Retrieved value "+mCurrentAllowance.toString());
+
+        //Setting value to UI
         mCurrentAllowanceValueView.setText(mCurrentAllowance.toString());
 
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Setting value in java variable from UI
                 String mAmountSpent  = mAmountSpentView.getText().toString();
                 if(mAmountSpent!=""){
+                    //Conversion from to integer
                     int mAmountSpentInt = Integer.parseInt(mAmountSpent);
+
+                    //Updating value and saving value to local file
                     mCurrentAllowance = mCurrentAllowance - mAmountSpentInt;
                     mCurrentAllowanceValueView.setText(mCurrentAllowance.toString());
                     mUpdatedAllowance = mCurrentAllowance + " as of "+ new java.util.Date().toString();
@@ -91,6 +102,8 @@ public class UpdateExpense extends AppCompatActivity {
                     Log.d("MyAllowance","Updated value "+mUpdatedAllowance.toString());
 
                 }
+
+                //Setting and calling MainActivity intent
                 Intent mIntent = new Intent(UpdateExpense.this,MainActivity.class);
                 startActivity(mIntent);
                 finish();
