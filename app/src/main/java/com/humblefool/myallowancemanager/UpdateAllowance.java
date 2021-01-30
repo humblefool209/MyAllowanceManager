@@ -68,23 +68,37 @@ public class UpdateAllowance  extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Calling superclass onCreate method
         super.onCreate(savedInstanceState);
+
+        //Setting view
         setContentView(R.layout.activity_update_allowance);
+
+        //Initializing variables to input control
         final EditText mReceivedAllowanceView = findViewById(R.id.value_allowance_received);
         final TextView mCurrentAllowanceValueView = findViewById(R.id.value_current_balance);
         Button mConfirmButton = findViewById(R.id.button_confirm);
 
+        //Reading current allowance from file
         mCurrentAllowance = readFromFile(this);
         Log.d("MyAllowance","Retrieved value "+mCurrentAllowance);
 
+        //Displaying retrieved value to field in UI
         mCurrentAllowanceValueView.setText(mCurrentAllowance.toString());
 
+        //OnClickListener on Confirm button
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Retrieving value from view to java variable
                 String mAllowanceReceived = mReceivedAllowanceView.getText().toString();
+
+
                 if (mAllowanceReceived != "") {
+                    //Converting String to integer
                     int mAllowanceReceivedInt = Integer.parseInt(mAllowanceReceived);
+
+                    //Updating allowance and saving it to target file
                     mCurrentAllowance = mCurrentAllowance + mAllowanceReceivedInt;
                     mCurrentAllowanceValueView.setText(mCurrentAllowance.toString());
                     mUpdatedAllowance = mCurrentAllowance.toString() + " as of "+ new java.util.Date().toString();
@@ -93,6 +107,7 @@ public class UpdateAllowance  extends AppCompatActivity {
 
                 }
 
+                //Calling MainActivity intent
                 Intent mIntent = new Intent(UpdateAllowance.this,MainActivity.class);
                 startActivity(mIntent);
                 finish();

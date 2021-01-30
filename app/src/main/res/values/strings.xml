@@ -9,4 +9,5 @@
     <string name="button_update_expense">Update expense</string>
     <string name="button_change">Confirm</string>
     <string name="app_name">My Allowance Manager</string>
+    <string name="allowance_entry_type">Enter an amount...</string>
 </resources>
